@@ -51,16 +51,40 @@ function btn()
         document.querySelector('#current-' + activePlayer).textContent = roundScore;
     }
     else {
-        //Next Player
-        
-        activePlayer === 0 ? activePlayer = 1: activePlayer = 0;
-        roundScore = 0;
-        
+        nextPlayer();
     }
         
 }
 document.querySelector('.btn-roll').addEventListener('click',btn);
 
+document.querySelector('.btn-hold').addEventListener('click', function () {
+    //Add CURRENT score to GLOBAl Score
+    scores[activePlayer] += roundScore;
+    //Update UI
+        document.querySelector('#score-' + activePlayer).textContent = scores[activePlayer];
+    if (socres[activePlayer] >= 4) {
+        document.querySelector('#name-' + activePlayer).textContent = 'Winner!';
+    }
+    
+    //Check if the player won
+    nextPlayer();
+})
+
+
+function nextPlayer() { 
+    //Next Player
+        
+        activePlayer === 0 ? activePlayer = 1: activePlayer = 0;
+        roundScore = 0;
+        
+        document.getElementById('current-0').textContent = '0';
+        document.getElementById('current-1').textContent = '0';
+        
+        document.querySelector('.player-0-panel').classList.toggle('active');
+        document.querySelector('.player-1-panel').classList.toggle('active');
+        
+        document.querySelector('.dice').style.display = 'none';
+}
 //Faster way to change elements in a HTML file, by looking it up by element ID
 //Set each text to 0
 document.getElementById('score-0').textContent = '0';
